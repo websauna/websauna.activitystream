@@ -59,7 +59,7 @@ def test_push_render_email(dbsession: Session, registry, user_id):
         u = dbsession.query(User).get(user_id)
 
         # Create an activity
-        a = create_activity(request, "demo_msg", {}, uuid4(), u)
+        a = create_activity(request, "demo_msg", {"text": "foobar"}, uuid4(), u)
 
         # Push it through notification channel
         channel = Email(request)
