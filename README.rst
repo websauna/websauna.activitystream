@@ -16,6 +16,15 @@ Features
 
 * Notification history
 
+.. image:: https://github.com/websauna/websauna.activititystream/blob/master/screenshots/bell.png
+    :width: 640px
+
+.. image:: https://github.com/websauna/websauna.activititystream/blob/master/screenshots/menu.png
+    :width: 640px
+
+.. image:: https://github.com/websauna/websauna.activititystream/blob/master/screenshots/history.png
+    :width: 640px
+
 Installation
 ============
 
