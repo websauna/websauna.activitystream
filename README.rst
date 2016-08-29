@@ -1,12 +1,26 @@
+.. contents:: :local:
+
+Introduction
+============
+
 This is a Python package for websauna.activitystream, an addon for `Websauna framework <https://websauna.org>`_.
 
 Activity stream gives you Facebook-like stream of activities and activity history for user.
+
+Features
+========
+
+* Email push notifications
+
+* Website built-in notification menu
+
+* Notification history
 
 Installation
 ============
 
 Local development mode
------------------------
+----------------------
 
 Activate the virtual environment of your Websauna application.
 
