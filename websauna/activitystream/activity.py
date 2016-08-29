@@ -12,7 +12,17 @@ from .models import Stream
 
 
 def create_activity(request: Request, msg_id: str, msg_context: dict, object_id: UUID, user: User):
+    """Creates a new activity.
 
+    The caller is responsible for firing events.
+
+    :param request:
+    :param msg_id:
+    :param msg_context:
+    :param object_id:
+    :param user:
+    :return:
+    """
     dbsession = Session.object_session(user)
 
     stream = Stream.get_or_create_user_stream(user)
@@ -25,7 +35,7 @@ def create_activity(request: Request, msg_id: str, msg_context: dict, object_id:
     stream.activities.append(a)
     dbsession.flush()
 
-    request.registry.notify(ActivityCreated(request, a))
+    return a
 
 
 def get_unread_activity_count(user: User):

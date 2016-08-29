@@ -4,11 +4,13 @@ import sqlalchemy as sa
 import sqlalchemy.dialects.postgresql as psql
 from sqlalchemy import orm
 
+from websauna.activitystream.interfaces import IActivity
 from websauna.system.model.columns import UTCDateTime
 from websauna.system.model.json import NestedMutationDict
 from websauna.system.model.meta import Base
 from websauna.system.user.models import User
 from websauna.utils.time import now
+from zope.interface import implementer
 
 
 class Stream(Base):
@@ -37,6 +39,7 @@ class Stream(Base):
         return stream
 
 
+@implementer(IActivity)
 class Activity(Base):
     """One activity in user stream."""
 
@@ -60,11 +63,8 @@ class Activity(Base):
     #: When the user marked this activity seen
     seen_at = sa.Column(UTCDateTime, default=None, nullable=True)
 
-    #: Message we render for this activity
-    msg_id = sa.Column(sa.String(64))
-
-    #: Default link where this activity takes you
-    link = sa.Column(sa.String(256))
+    #: We use this as a key to look up different activity renderers.
+    activity_type = sa.Column(sa.String(64))
 
     #: Template variables passed to the message renderer
     msg_context = sa.Column(NestedMutationDict.as_mutable(psql.JSONB), default=dict)

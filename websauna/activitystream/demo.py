@@ -1,6 +1,9 @@
 """This contains app entry point for running a demo site for this addon or running functional tests for this addon."""
 
 import websauna.system
+from websauna.system.model.meta import Base
+
+from .renderer import DefaultActivityRenderer, register_activity_renderer
 
 
 class Initializer(websauna.system.DemoInitializer):
@@ -9,6 +12,15 @@ class Initializer(websauna.system.DemoInitializer):
     def include_addons(self):
         """Include this addon in the configuration."""
         self.config.include("websauna.activitystream")
+
+    def configure_views(self):
+        super(Initializer, self).configure_views()
+
+        from . import demoapp
+        self.config.scan(demoapp)
+
+        # Register out test renderer
+        register_activity_renderer(self.config.registry, demoapp.DemoMessageRenderer, "demo_msg")
 
 
 def main(global_config, **settings):

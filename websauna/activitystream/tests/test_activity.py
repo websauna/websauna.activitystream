@@ -5,14 +5,23 @@ import pytest
 import transaction
 
 from sqlalchemy.orm.session import Session
+
+from pyramid.registry import Registry
 from splinter.driver import DriverAPI
+from websauna.system import DemoInitializer
 from websauna.system.user.models import User
 
-from websauna.tests.utils import create_user
+from websauna.tests.utils import create_user, make_dummy_request
 from websauna.tests.utils import EMAIL
 from websauna.tests.utils import PASSWORD
 
 from websauna.activitystream.activity import create_activity, get_unread_activity_count, mark_seen
+
+
+@pytest.fixture()
+def test_request(dbsession):
+    r =  Registry()
+    return make_dummy_request(dbsession, r)
 
 
 @pytest.fixture
@@ -22,14 +31,12 @@ def user_id(dbsession, registry):
         return user.id
 
 
-
 def test_create(dbsession: Session, user_id, test_request):
     """Create new activity."""
 
     with transaction.manager:
         u = dbsession.query(User).get(user_id)
         create_activity(test_request, "foobar", {}, uuid4(), u)
-
 
 
 def test_unread(dbsession: Session, user_id, test_request):

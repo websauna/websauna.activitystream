@@ -1,0 +1,11 @@
+{% extends "email/base.html" %}
+
+{% block content %}
+
+    {{ html_body|safe }}
+
+    <p style="text-align: center">
+        <a class="btn-primary" href="{{ link }}">View more</a>
+    </p>
+
+{% endblock %}

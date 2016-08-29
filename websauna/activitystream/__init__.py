@@ -21,8 +21,8 @@ class AddonInitializer:
     def configure_templates(self):
         """Include our package templates folder in Jinja 2 configuration."""
 
-        # Use prepend=False here so that the app can override our templates easily
-        self.config.add_jinja2_search_path('websauna.activitystream:templates', name='.html', prepend=False)  # HTML templates for pages
+        self.config.add_jinja2_search_path('websauna.activitystream:templates', name='.html', prepend=False)
+        self.config.add_jinja2_search_path('websauna.activitystream:templates', name='.txt', prepend=False)
 
     @after(Initializer.configure_instrumented_models)
     def configure_instrumented_models(self):
@@ -49,6 +49,9 @@ class AddonInitializer:
 
         # Run our custom initialization code which does not have a good hook
         self.configure_addon_views()
+
+        from . import subscribers
+        self.config.scan(subscribers)
 
 
 def includeme(config: Configurator):
