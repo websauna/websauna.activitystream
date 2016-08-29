@@ -1,0 +1,12 @@
+{% extends "site/base.html" %}
+
+{% block content %}
+  <h1>Activity history</h1>
+
+  <div class="list-group">
+    {% for activity in activities %}
+      {{ activity|safe }}
+    {% endfor %}
+  </div>
+
+{% endblock %}

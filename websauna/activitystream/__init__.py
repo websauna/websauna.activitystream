@@ -53,6 +53,9 @@ class AddonInitializer:
         from . import subscribers
         self.config.scan(subscribers)
 
+        from . import templatevars
+        self.config.include(templatevars)
+
 
 def includeme(config: Configurator):
     """Entry point for Websauna main app to include this addon.

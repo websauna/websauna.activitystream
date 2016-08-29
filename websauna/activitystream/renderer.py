@@ -25,9 +25,9 @@ class DefaultActivityRenderer:
 
 
 def get_activity_renderer(request: Request, a: Activity) -> DefaultActivityRenderer:
-    renderer = request.registry.queryAdapter(a, interface=IActivityRenderer, name=a.msg_id)
+    renderer = request.registry.queryAdapter(a, interface=IActivityRenderer, name=a.activity_type)
     if not renderer:
-        raise NoRendererRegistered("No activity renderer registered for {}".format(a.msg_id))
+        raise NoRendererRegistered("No activity renderer registered for {}".format(a.activity_type))
 
     return renderer
 

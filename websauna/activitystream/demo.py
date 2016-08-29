@@ -22,6 +22,8 @@ class Initializer(websauna.system.DemoInitializer):
         # Register out test renderer
         register_activity_renderer(self.config.registry, demoapp.DemoMessageRenderer, "demo_msg")
 
+        self.config.add_jinja2_search_path('websauna.activitystream:demotemplates', name='.html', prepend=True)
+
 
 def main(global_config, **settings):
     init = Initializer(global_config)

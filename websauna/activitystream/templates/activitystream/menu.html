@@ -1,0 +1,31 @@
+{% with activity_data = get_activity_data(request) %}
+  {% if activity_data %}
+
+    <li class="dropdown">
+
+      <a role="button" data-toggle="dropdown" data-target="#" href="{{ view_all_link }}">
+        <i class="fa fa-bell"></i>
+        {% if activity_data.unread_count %}
+            <span class="badge">{{ activity_data.unread_count }}</span>
+        {% endif %}
+      </a>
+
+      <ul class="dropdown-menu notifications" role="menu">
+
+        {% if activity_data.notifications %}
+          {% for notification in activity_data.notifications %}
+            {{ notification|safe }}
+          {% endfor %}
+
+          <li class="divider"></li>
+        {% endif %}
+
+        <li>
+          <a href="{{ activity_data.view_all_link }}"><i class="fa fa-backward"></i> View history</a>
+        </li>
+      </ul>
+
+    </li>
+
+  {% endif %}
+{% endwith %}

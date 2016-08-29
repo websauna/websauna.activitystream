@@ -11,7 +11,7 @@ from .models import Activity
 from .models import Stream
 
 
-def create_activity(request: Request, msg_id: str, msg_context: dict, object_id: UUID, user: User):
+def create_activity(request: Request, activity_type: str, msg_context: dict, object_id: UUID, user: User):
     """Creates a new activity.
 
     The caller is responsible for firing events.
@@ -29,7 +29,7 @@ def create_activity(request: Request, msg_id: str, msg_context: dict, object_id:
 
     a = Activity()
     a.object_id = object_id
-    a.msg_id = msg_id
+    a.activity_type = activity_type
     a.msg_context = msg_context
 
     stream.activities.append(a)
@@ -38,14 +38,24 @@ def create_activity(request: Request, msg_id: str, msg_context: dict, object_id:
     return a
 
 
-def get_unread_activity_count(user: User):
-    """Get number of unseen activities"""
+def get_last_unseen(stream: Stream, limit=5):
+    return stream.activities.filter(Activity.seen_at == None)[0:5]
 
-    stream = Stream.get_or_create_user_stream(user)
+
+def get_unread_activity_count(stream: Stream):
+    """Get number of unseen activities"""
     return stream.activities.filter(Activity.seen_at == None).count()
 
 
-def mark_seen(user: User, object_id: UUID):
-    stream = Stream.get_or_create_user_stream(user)
-    unread = stream.activities.filter(Activity.object_id== object_id)
+def mark_seen(stream: Stream, object_id: UUID):
+    unread = stream.activities.filter(Activity.object_id==object_id, Activity.seen_at==None)
     unread.update(values=dict(seen_at=now()))
+
+
+def mark_seen_by_user(user: User, object_id: UUID):
+    stream = Stream.get_or_create_user_stream(user)
+    mark_seen(stream, object_id)
+
+
+def get_all_activities(stream: Stream):
+    return stream.activities.all()

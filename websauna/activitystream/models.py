@@ -64,11 +64,13 @@ class Activity(Base):
     seen_at = sa.Column(UTCDateTime, default=None, nullable=True)
 
     #: We use this as a key to look up different activity renderers.
-    activity_type = sa.Column(sa.String(64))
+    activity_type = sa.Column(sa.String(64), nullable=False)
 
     #: Template variables passed to the message renderer
     msg_context = sa.Column(NestedMutationDict.as_mutable(psql.JSONB), default=dict)
 
-
+    __mapper_args__ = {
+        "order_by": created_at.desc()
+    }
 
 

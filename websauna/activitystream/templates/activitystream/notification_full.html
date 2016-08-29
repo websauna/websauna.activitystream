@@ -1,0 +1,11 @@
+<a class="list-group-item" href="{{ link }}">
+  <h4>{{ title }}</h4>
+
+  <div>
+    {{ html_body|safe }}
+  </div>
+
+  <p>
+    <small class="text-muted">{{ activity.created_at|friendly_time(source_timezone="UTC") }} · {{ activity.created_at|datetime(show_timezone=True, source_timezone="UTC") }}</small>
+  </p>
+</a>
