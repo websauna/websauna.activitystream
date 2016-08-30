@@ -1,5 +1,10 @@
 <a class="list-group-item notification-full-{{ activity.activity_type }}" href="{{ link }}">
-  <h4>{{ title }}</h4>
+  <h3 {% if not activity.seen_at %}class="text-success"{% endif %}>
+    {% if not activity.seen_at %}
+      <span class="text-success">·</span>
+    {% endif %}
+    {{ title }}
+  </h3>
 
   <div>
     {{ html_body|safe }}

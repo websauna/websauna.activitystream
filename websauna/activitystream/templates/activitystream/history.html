@@ -1,7 +1,23 @@
 {% extends "site/base.html" %}
 
 {% block content %}
-  <h1>Activity history</h1>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Activity history</h1>
+
+      <form method="POST" action="{{ 'clear_notification_history'|route_url }}">
+        <p>
+          <button id="btn-mark-all-seen" class="btn btn-primary" type="submit">
+            Mark all seen
+          </button>
+        </p>
+      </form>
+
+    </div>
+  </div>
+
+
 
   <div class="list-group">
     {% for activity in activities %}

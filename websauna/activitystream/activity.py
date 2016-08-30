@@ -67,5 +67,11 @@ def mark_seen_by_user(user: User, object_id: UUID, activity_type=None):
     mark_seen(stream, object_id, activity_type)
 
 
+def mark_all_seen_by_user(user: User):
+    stream = Stream.get_or_create_user_stream(user)
+    unread = stream.activities.filter(Activity.seen_at == None)
+    unread.update(values=dict(seen_at=now()))
+
+
 def get_all_activities(stream: Stream):
     return stream.activities.all()
