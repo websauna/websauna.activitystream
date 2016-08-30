@@ -47,14 +47,24 @@ def get_unread_activity_count(stream: Stream):
     return stream.activities.filter(Activity.seen_at == None).count()
 
 
-def mark_seen(stream: Stream, object_id: UUID):
+def mark_seen(stream: Stream, object_id: UUID, activity_type=None):
+    """Mark notifications seen bt user.
+
+    Call this in the context of target page view function.
+
+    :param activity_type: Optional type if the same object can have several activities of different types.
+    """
     unread = stream.activities.filter(Activity.object_id==object_id, Activity.seen_at==None)
+
+    if activity_type:
+        unread.filter(Activity.activity_type==activity_type)
+
     unread.update(values=dict(seen_at=now()))
 
 
-def mark_seen_by_user(user: User, object_id: UUID):
+def mark_seen_by_user(user: User, object_id: UUID, activity_type=None):
     stream = Stream.get_or_create_user_stream(user)
-    mark_seen(stream, object_id)
+    mark_seen(stream, object_id, activity_type)
 
 
 def get_all_activities(stream: Stream):

@@ -1,4 +1,4 @@
-<li>
+<li class="notification-{{ activity.activity_type }}">
   <a href="{{ link }}">
     {{ title }} <small class="text-muted">· {{ activity.created_at|friendly_time(source_timezone="UTC") }}</small>
   </a>
