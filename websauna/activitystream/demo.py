@@ -1,6 +1,7 @@
 """This contains app entry point for running a demo site for this addon or running functional tests for this addon."""
 
 import websauna.system
+from websauna.activitystream.interfaces import IPushChannelProvider
 from websauna.system.model.meta import Base
 
 from .renderer import DefaultActivityRenderer, register_activity_renderer
@@ -21,6 +22,10 @@ class Initializer(websauna.system.DemoInitializer):
 
         # Register out test renderer
         register_activity_renderer(self.config.registry, demoapp.DemoMessageRenderer, "demo_msg")
+
+        # Register our push channels
+        from websauna.activitystream.channel import default_push_channel_provider
+        self.config.registry.registerUtility(default_push_channel_provider, IPushChannelProvider)
 
         self.config.add_jinja2_search_path('websauna.activitystream:demotemplates', name='.html', prepend=True)
 

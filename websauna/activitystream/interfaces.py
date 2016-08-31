@@ -16,5 +16,9 @@ class IActivityRenderer(Interface):
         pass
 
 
+class IPushChannelProvider(Interface):
+    """A factory function that returns list of Channel instances for push messages."""
+
+
 class NoRendererRegistered(Exception):
     pass

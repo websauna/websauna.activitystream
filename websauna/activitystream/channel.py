@@ -1,5 +1,6 @@
 from typing import List
 
+from websauna.activitystream.interfaces import IPushChannelProvider
 from websauna.system.http import Request
 from websauna.system.mail import send_templated_mail
 from .models import Activity
@@ -38,7 +39,12 @@ class Email(Channel):
         send_templated_mail(self.request, [user.email], "activitystream/email/notification", context=context)
 
 
-def get_push_channels(request: Request) -> List[Channel]:
+def get_push_channels(request):
+    factory = request.registry.getUtility(IPushChannelProvider)
+    return factory(request)
+
+
+def default_push_channel_provider(request: Request) -> List[Channel]:
     """Get all channels where a notification is pushed."""
     return [Email(request)]
 

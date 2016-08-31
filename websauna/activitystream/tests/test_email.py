@@ -9,11 +9,12 @@ from sqlalchemy.orm.session import Session
 from pyramid.registry import Registry
 from pyramid_mailer.mailer import DummyMailer
 from websauna.activitystream.interfaces import NoRendererRegistered
+from websauna.system.http.utils import make_routable_request
 from websauna.system.mail.utils import get_mailer
 from websauna.system.user.models import User
 
 from websauna.activitystream.activity import create_activity
-from websauna.tests.utils import create_user, make_dummy_request, make_routable_request
+from websauna.tests.utils import create_user, make_dummy_request
 
 from ..channel import Email
 
