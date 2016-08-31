@@ -1,4 +1,4 @@
-<a class="list-group-item notification-full-{{ activity.activity_type }}" href="{{ link }}">
+<a class="list-group-item notification-full-{{ activity.activity_type }} {% if activity.seen_at %}notification-seen{% else %}notification-unseen{% endif %}" href="{{ link }}">
   <h3 {% if not activity.seen_at %}class="text-success"{% endif %}>
     {% if not activity.seen_at %}
       <span class="text-success">·</span>
