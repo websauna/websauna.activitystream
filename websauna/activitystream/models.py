@@ -73,4 +73,9 @@ class Activity(Base):
         "order_by": created_at.desc()
     }
 
+    def __str__(self):
+        return "Activity:{} id:{}".format(self.activity_type, self.id)
+
+    def __repr__(self):
+        return self.__str__()
 
