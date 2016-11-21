@@ -36,7 +36,7 @@ class Email(Channel):
         html_body = renderer.render_html_body(self.request, self.__name__)
         link = renderer.render_link(self.request, self.__name__)
         context = {"title": title, "html_body": html_body, "link": link}
-        send_templated_mail(self.request, [user.email], "activitystream/email/notification", context=context)
+        send_templated_mail(self.request, [user.email], "activitystream/email/notification", context=context, immediate=True)
 
 
 def get_push_channels(request):
